@@ -2,6 +2,7 @@
 // @name     OpenNewTab
 // @author   leyle@leyle.com
 // @include  https://www.uump4.net/*
+// @include  http://sexinsex.net/*
 // @require  https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js
 // @grant    unsafeWindow
 // @run-at   document-end
