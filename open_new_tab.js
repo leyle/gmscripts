@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name     OpenNewTab
+// @name     OpenInNewTab
 // @author   leyle@leyle.com
 // @include  https://www.uump4.net/*
 // @include  http://sexinsex.net/*
