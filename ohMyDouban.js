@@ -22,12 +22,7 @@
     }
 
     // open topic in new tab
-    const as = document.getElementsByTagName("a");
-    for(const a of as) {
-        if(a.href && a.href.includes("/topic/")) {
-            a.setAttribute("target", "_blank");
-        }
-    }
+    // done in openInNewTab.js
 
     // remove floating landing bar
     const landingBar = document.getElementById("landing-bar");

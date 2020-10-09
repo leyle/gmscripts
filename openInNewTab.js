@@ -37,6 +37,8 @@ function shouldOpenInNewTab(e) {
             return checkBTDX8(e);
         case hostHas('v2ex.com'):
             return checkV2EX(e);
+        case hostHas('douban.com'):
+            return checkDouban(e);
 
         default:
             return false;
@@ -55,7 +57,14 @@ function checkGoogle(e) {
 // https://medium.com
 function checkInstapaper(e) {
     const url = e.attr('href');
-    return url.includes('read');
+    if(url.includes('read')) {
+        return true;
+    }
+    const aclass = e.attr('class')
+    if(aclass.includes('js_domain_linkout')) {
+        return true;
+    }
+    return false;
 }
 
 // https://medium.com
@@ -78,9 +87,21 @@ function checkV2EX(e) {
    return e.attr('href').includes('/t/');
 }
 
+// https://gitlab.com
 function checkGitlab(e) {
     if(e.attr('href').includes('/-/')) {
         return false;
     }
     return true;
+}
+
+// https://douban.com
+function checkDouban(e) {
+    const url = e.attr('href');
+    return url.includes('/topic/')
+        || url.includes('/review/')
+        || url.includes('/celebrity/')
+        || url.includes('/subject/')
+        || url.includes('doulist')
+        || url.includes('/people/');
 }
