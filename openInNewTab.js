@@ -40,6 +40,9 @@ function shouldOpenInNewTab(e) {
         case hostHas('douban.com'):
             return checkDouban(e);
 
+        case hostHas('taohuazu'):
+            return checkThZu(e);
+
         default:
             return false;
     }
@@ -104,4 +107,13 @@ function checkDouban(e) {
         || url.includes('/subject/')
         || url.includes('doulist')
         || url.includes('/people/');
+}
+
+// taohuazu9.com
+function checkThZu(e) {
+    const url = e.attr('href');
+    if(url.includes('viewthread')) {
+        return true;
+    }
+    return false;
 }
