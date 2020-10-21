@@ -39,17 +39,29 @@ function shouldOpenInNewTab(e) {
             return checkV2EX(e);
         case hostHas('douban.com'):
             return checkDouban(e);
-
         case hostHas('taohuazu'):
             return checkThZu(e);
 
         default:
-            return false;
+            return checkDefault(e);
     }
 }
 
 function hostHas(domain) {
     return window.location.host.includes(domain);
+}
+
+// default
+// discuz's style -> url contains 'thread'
+function checkDefault(e) {
+    const url = e.attr('href');
+    const keys = ['thread'];
+    for(const key of keys) {
+        if(url.includes(key)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // https://www.google.com
