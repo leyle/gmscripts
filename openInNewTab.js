@@ -6,6 +6,9 @@
 // @charset  UTF-8
 // ==/UserScript==
 
+// todo
+// 1. adds more debug logs to show which url is been hit
+
 // open topic in new tab
 $(document).ready(function () {
     $('a').on('click', function (event) {
@@ -22,28 +25,31 @@ $(document).ready(function () {
 })
 
 function shouldOpenInNewTab(e) {
-    switch (true) {
-        case hostHas('google'):
-            return checkGoogle(e);
-        case hostHas('gitlab.com'):
-            return checkGitlab(e);
-        case hostHas('medium'):
-            return checkMedium();
-        case hostHas('instapaper'):
-            return checkInstapaper(e);
-        case hostHas('uump4'):
-            return checkUUMP4(e);
-        case hostHas('btdx8.com'):
-            return checkBTDX8(e);
-        case hostHas('v2ex.com'):
-            return checkV2EX(e);
-        case hostHas('douban.com'):
-            return checkDouban(e);
-        case hostHas('taohuazu'):
-            return checkThZu(e);
+    // precheck
+    // first check general conditions
+    if(checkDefault(e)) {
+        return true;
+    } else {
+        // check specical conditions
+        switch (true) {
+            case hostHas('google'):
+                return checkGoogle(e);
+            case hostHas('gitlab.com'):
+                return checkGitlab(e);
+            case hostHas('medium'):
+                return checkMedium();
+            case hostHas('instapaper'):
+                return checkInstapaper(e);
+            case hostHas('btdx8.com'):
+                return checkBTDX8(e);
+            case hostHas('v2ex.com'):
+                return checkV2EX(e);
+            case hostHas('douban.com'):
+                return checkDouban(e);
 
-        default:
-            return checkDefault(e);
+            default:
+                return false;
+        }
     }
 }
 
@@ -52,12 +58,14 @@ function hostHas(domain) {
 }
 
 // default
-// discuz's style -> url contains 'thread'
+// discuz's style -> url contains 'thread' or 'forum'
+// github/gitlab source file -> '/blob/'
 function checkDefault(e) {
     const url = e.attr('href');
-    const keys = ['thread'];
+    const keys = ['forum', 'thread', '/blob/'];
     for(const key of keys) {
         if(url.includes(key)) {
+            console.debug(`[checkDefault]openUrlInNewTab hit: ${key}`);
             return true;
         }
     }
@@ -87,11 +95,6 @@ function checkMedium() {
     return true;
 }
 
-// https://www.uump4.net
-function checkUUMP4(e) {
-    return e.attr('href').includes('thread');
-}
-
 // https://www.btdx8.com
 function checkBTDX8(e) {
     return e.attr('href').includes('torrent');
@@ -119,13 +122,4 @@ function checkDouban(e) {
         || url.includes('/subject/')
         || url.includes('doulist')
         || url.includes('/people/');
-}
-
-// taohuazu9.com
-function checkThZu(e) {
-    const url = e.attr('href');
-    if(url.includes('viewthread')) {
-        return true;
-    }
-    return false;
 }
