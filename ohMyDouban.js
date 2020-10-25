@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Remove DouBan Hot Replies
+// @name         ohMyDouban
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  improve douban.com experience
@@ -16,9 +16,14 @@
     if(hotName.length > 0) {
         hotName[0].remove();
     }
-    const replies = document.getElementsByClassName('topic-reply popular-bd');
+    let replies = document.getElementsByClassName('topic-reply popular-bd');
     if(replies.length > 0) {
         replies[0].remove();
+    } else {
+        replies = document.getElementsByClassName('popular-bd');
+        if(replies.length > 0) {
+            replies[0].remove();
+        }
     }
 
     // open topic in new tab
